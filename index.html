@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff758c;
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            font-family: sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 85%;
+            max-width: 350px;
+            z-index: 10;
+        }
+
+        h1 { color: #d63384; font-size: 1.8rem; }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            min-height: 100px;
+            align-items: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #yesBtn { background: #4CAF50; color: white; }
+        #noBtn { background: #f44336; color: white; position: relative; }
+
+        .hidden { display: none; }
+        
+        #coupon {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #d63384;
+            border-radius: 15px;
+            background: #fff5f8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainCard">
+        <h1>Will you be my Valentine? ❤️</h1>
+        <div class="btn-container">
+            <button id="yesBtn" onclick="sayYes()">Yes!</button>
+            <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="successCard">
+        <h1>Yay! 🥰</h1>
+        <div id="coupon">
+            <p>OFFICIAL VOUCHER</p>
+            <h2 style="color: #d63384;">🛍️ SHOPPING SPREE</h2>
+            <p style="font-size: 0.8rem;">Ready when you are!</p>
+        </div>
+        <p style="margin-top:15px;">I love you! ❤️</p>
+    </div>
+
+    <div id="music-container"></div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainCard = document.getElementById('mainCard');
+        const successCard = document.getElementById('successCard');
+        
+        let yesSize = 1;
+        const phrases = ["Are you sure?", "Really?", "Pookie please!", "Think again!", "Nice try!", "Don't do this!"];
+        let phraseIdx = 0;
+
+        function moveNo() {
+            // Move the No button
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            // Change No text
+            noBtn.innerText = phrases[phraseIdx];
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+
+            // Make Yes bigger
+            yesSize += 0.2;
+            yesBtn.style.transform = `scale(${yesSize})`;
+        }
+
+        function sayYes() {
+            mainCard.classList.add('hidden');
+            successCard.classList.remove('hidden');
+            
+            // Add music only after they click Yes to satisfy browser rules
+            document.getElementById('music-container').innerHTML = `
+                <iframe width="1" height="1" src="https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1" 
+                frameborder="0" allow="autoplay"></iframe>`;
+        }
+    </script>
+</body>
+</html>
